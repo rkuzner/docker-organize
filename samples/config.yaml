@@ -1,0 +1,42 @@
+# organize configuration file
+# https://organize.readthedocs.io
+
+image_extensions: &img_ext
+  - ".jpg"
+  - ".jpeg"
+  - ".png"
+
+video_extensions: &vid_ext
+  - ".gif"
+  - ".mp4"
+
+rules:
+  - name: "Synced Camera Roll Images to Old"
+    tags:
+      - images
+    locations:
+      - path: "/source/Syncthing/DCIM"
+    filters:
+      - extension:
+          - *img_ext
+      - created:
+          months: 6
+      - exif:
+          image.datetime
+    actions:
+      - move:
+          dest: "/target/OldCameraRoll/{exif.image.datetime.year}/"
+
+  - name: "Synced Camera Roll Videos to Old"
+    tags:
+      - videos
+    locations:
+      - path: "/source/Syncthing/DCIM"
+    filters:
+      - extension:
+          - *vid_ext
+      - created:
+          months: 6
+    actions:
+      - move:
+          dest: "/target/OldCameraRoll/{created.year}/"
