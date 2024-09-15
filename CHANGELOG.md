@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 - pre-commit-config.yaml
 - ReadMe
 - ChangeLog
+- sample config.yaml
 
 ![img_mod]
 
