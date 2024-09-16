@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 - ReadMe
 - ChangeLog
 - sample config.yaml
+- docker image & manifest build script
 
 ![img_mod]
 
