@@ -40,7 +40,7 @@ docker run -it --name docker-organize
 
 ``` bash
 docker run -dit --rm --name docker-organize
- -v "/path/to/config/":/root/.config/organize/
+ -v "/path/to/config/":/ot/.config/organize/
  -v "/path/to/logs/":/var/log/organize/
  -v "/source-folder/":/source
  -v "/target-folder/":/target
