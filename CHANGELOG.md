@@ -27,12 +27,6 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
-## 0.1.1 - 2024-09-15
-
-![img_add]
-
-- prepare log folder
-
 ## 0.1.0 - 2024-09-15
 
 ![img_add]
@@ -46,9 +40,10 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 ![img_mod]
 
-- allow sim command and crontab schedule via env vars
-- encapsulate tool into unpriviledged user
 - bump Python version
+- encapsulate tool into unpriviledged user
+- prepare log folder
+- allow sim command and crontab schedule via env vars
 
 <!-- change type images & links -->
 [img_add]: https://img.shields.io/badge/-added-green.svg "Added"
