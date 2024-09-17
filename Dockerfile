@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 
 # add a user so the tool is encapsulated
-RUN useradd -ms /bin/bash ot
+RUN useradd -mUs /bin/bash ot
 
 # update image packages
 RUN apt-get update
@@ -16,8 +16,8 @@ RUN touch /var/spool/cron/crontabs/ot
 RUN pip3 install -U organize-tool
 
 # allow app to have log folder
-RUN mkdir -p /var/log/organize
-RUN chmod ugo+rw /var/log/organize
+RUN mkdir -p /home/ot/logs
+RUN chown -R ot:ot /home/ot/logs
 
 # prepare the image EntryPoint
 COPY scripts/entrypoint.sh /

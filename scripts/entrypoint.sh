@@ -5,6 +5,7 @@ set -e
 
 # set the default ORGANIZE_COMMAND
 THE_ORGANIZE_COMMAND="run"
+THE_LOG_FOLDER="/home/ot/logs"
 
 # evaluate if ORGANIZE_COMMAND was set on ENV, if so, only use if valid
 if [ -n "${ORGANIZE_COMMAND}" ]; then
@@ -19,7 +20,7 @@ echo "Using THE_ORGANIZE_COMMAND: ${THE_ORGANIZE_COMMAND}"
 # check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it; and keep the image running...
 if [ -n "${ORGANIZE_SCHEDULE}" ]; then
   echo "Found ORGANIZE_SCHEDULE environment var!"
-  (crontab -l 2>/dev/null; echo "${ORGANIZE_SCHEDULE} /usr/local/bin/organize ${THE_ORGANIZE_COMMAND} >> /var/log/organize/organize.log 2>&1") | crontab -
+  (crontab -l 2>/dev/null; echo "${ORGANIZE_SCHEDULE} /usr/local/bin/organize ${THE_ORGANIZE_COMMAND} >> ${THE_LOG_FOLDER}/organize.log 2>&1") | crontab -
   service cron restart
   /bin/bash
 fi
@@ -28,5 +29,5 @@ fi
 if [ -z "${ORGANIZE_SCHEDULE}" ]; then
   echo "No ORGANIZE_SCHEDULE environment var Found!"
   echo "This is a Single run/sim!"
-  organize "${THE_ORGANIZE_COMMAND}" >> /var/log/organize/organize.log 2>&1
+  organize "${THE_ORGANIZE_COMMAND}" >> ${THE_LOG_FOLDER}/organize.log 2>&1
 fi
