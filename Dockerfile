@@ -15,6 +15,10 @@ RUN touch /var/spool/cron/crontabs/ot
 # install the tool onto the image
 RUN pip3 install -U organize-tool
 
+# allow app to have log folder
+RUN mkdir -p /var/log/organize
+RUN chmod ugo+rw /var/log/organize
+
 # prepare the image EntryPoint
 COPY scripts/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
