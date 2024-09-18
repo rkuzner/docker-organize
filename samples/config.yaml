@@ -15,17 +15,17 @@ rules:
     tags:
       - images
     locations:
-      - path: "/source/Syncthing/DCIM"
+      - path: "/data/Syncthing/DCIM"
     filters:
       - extension:
           - *img_ext
-      - created:
+      - lastmodified:
           months: 6
       - exif:
           image.datetime
     actions:
       - move:
-          dest: "/target/OldCameraRoll/{exif.image.datetime.year}/"
+          dest: "/data/OldCameraRoll/{exif.image.datetime.year}/"
 
   - name: "Synced Camera Roll Videos to Old"
     tags:
@@ -35,8 +35,8 @@ rules:
     filters:
       - extension:
           - *vid_ext
-      - created:
+      - lastmodified:
           months: 6
     actions:
       - move:
-          dest: "/target/OldCameraRoll/{created.year}/"
+          dest: "/target/OldCameraRoll/{lastmodified.year}/"
