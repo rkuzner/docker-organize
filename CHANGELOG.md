@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 - encapsulate tool into unpriviledged user
 - prepare log folder
 - allow sim command and crontab schedule via env vars
+- encapsulate tool run in single script to be used by crontab and single runs consistently
 
 <!-- change type images & links -->
 [img_add]: https://img.shields.io/badge/-added-green.svg "Added"
