@@ -10,15 +10,18 @@ The image works (and uses) the following paths actively:
 
 - config: directory where yaml rule file is stored
 - logs: directory where running logs will be stored
+- data: directory with files that you want to process
 - source: (base) directory with files that you want to process
 - target: (base) directory for move and copy operations
+`data`, `source` & `target` volumes may be used at your discretion, they are *optional* mappings, keep in mind carefuly referencing them on the organize-tool config files.
 
 ## Single Run Example
 
 ``` bash
 docker run -it --name docker-organize
- -v "/path/to/config/":/ot/.config/organize/
- -v "/path/to/logs/":/var/log/organize/
+ -v "/path/to/config/":/config
+ -v "/path/to/logs/":/logs
+ -v "/data-folder/":/data
  -v "/source-folder/":/source
  -v "/target-folder/":/target
  docker-organize
@@ -28,8 +31,9 @@ docker run -it --name docker-organize
 
 ``` bash
 docker run -it --name docker-organize
- -v "/path/to/config/":/ot/.config/organize/
- -v "/path/to/logs/":/var/log/organize/
+ -v "/path/to/config/":/config
+ -v "/path/to/logs/":/logs
+ -v "/data-folder/":/data
  -v "/source-folder/":/source
  -v "/target-folder/":/target
  -e ORGANIZE_COMMAND=sim
@@ -40,8 +44,9 @@ docker run -it --name docker-organize
 
 ``` bash
 docker run -dit --rm --name docker-organize
- -v "/path/to/config/":/ot/.config/organize/
- -v "/path/to/logs/":/var/log/organize/
+ -v "/path/to/config/":/config
+ -v "/path/to/logs/":/logs
+ -v "/data-folder/":/data
  -v "/source-folder/":/source
  -v "/target-folder/":/target
  -e ORGANIZE_SCHEDULE="0 3 * * *"
