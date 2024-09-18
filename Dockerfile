@@ -20,6 +20,13 @@ RUN pip3 install -U organize-tool
 COPY scripts/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
+# prepare the run script
+COPY scripts/organize-run.conf /home/ot/
+COPY scripts/organize-run.sh /home/ot/
+RUN chown ot:ot /home/ot/organize-run.conf && \
+    chown ot:ot /home/ot/organize-run.sh && \
+    chmod +x /home/ot/organize-run.sh
+
 # allow app to operate on data, source & target folders
 # allow folders for config & logs
 RUN mkdir -p /data   && chmod go+rw /data   && \
@@ -32,15 +39,10 @@ RUN mkdir -p /data   && chmod go+rw /data   && \
 VOLUME /data /source /target /config /logs
 
 # allow app to find config files on default path
-ENV ORGANIZE_CONFIG=/config
+ENV ORGANIZE_CONFIG=/config/config.yaml
 
 # switch to the user
 USER ot
 WORKDIR /home/ot
-
-# prepare the run script
-COPY scripts/organize-run.conf /home/ot
-COPY scripts/organize-run.sh /home/ot
-RUN chmod +x /home/ot/organize-run.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
