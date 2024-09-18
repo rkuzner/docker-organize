@@ -3,10 +3,10 @@
 # exit immediately on any shell error
 set -e
 
-logFolder="/logs"
-logFile="${logFolder}/${scriptBaseName}-$( date +%F ).log"
 scriptFolder=$( cd "$( dirname "${0}" )" && pwd )
 scriptBaseName=$( basename "${0}" .sh )
+logFolder="/logs"
+logFile="${logFolder}/${scriptBaseName}-$( date +%F ).log"
 
 configFileName="${scriptFolder}/${scriptBaseName}.conf"
 if [ -f "${configFileName}" ]; then
