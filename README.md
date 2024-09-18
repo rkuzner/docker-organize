@@ -4,6 +4,8 @@ A Dockerized version of the file management utility [Organize](https://github.co
 
 ## Usage
 
+Image can be used for single runs or for recurring scheduled runs with crontab.
+
 ### Paths
 
 The image works (and uses) the following paths actively:
