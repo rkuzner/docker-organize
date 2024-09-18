@@ -4,7 +4,12 @@ dockerUserName="rkuzner"
 imageVersion="0.1.0"
 
 # to run this commands, you should be logged to docker-hub!
-docker login -u ${dockerUserName}
+docker info | grep -q "Username"
+isLogged=$?
+if [ ${isLogged} -gt 0 ]; then
+    echo "Logging in as ${dockerUserName}..."
+    docker login -u ${dockerUserName}
+fi
 
 # build platform specific images
 docker build --platform linux/amd64 -t ${dockerUserName}/docker-organize:${imageVersion}-amd64 .
