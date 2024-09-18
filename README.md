@@ -15,6 +15,7 @@ The image works (and uses) the following paths actively:
 - data: directory with files that you want to process
 - source: (base) directory with files that you want to process
 - target: (base) directory for move and copy operations
+
 `data`, `source` & `target` volumes may be used at your discretion, they are *optional* mappings, keep in mind carefuly referencing them on the organize-tool config files.
 
 ## Single Run Example
