@@ -10,10 +10,11 @@ logFile="${logFolder}/${scriptBaseName}-$( date +%F ).log"
 
 configFileName="${scriptFolder}/${scriptBaseName}.conf"
 if [ -f "${configFileName}" ]; then
-	source ${configFileName}
+	# shellcheck disable=SC1090
+	source "${configFileName}"
 else
 	echo "Config file not-found: ${configFileName}, using default values"
 fi
 [ -z "${THE_ORGANIZE_COMMAND}" ] && THE_ORGANIZE_COMMAND="run"
 
-/usr/local/bin/organize ${THE_ORGANIZE_COMMAND} >> ${logFile} 2>&1
+/usr/local/bin/organize "${THE_ORGANIZE_COMMAND}" 2>&1 | tee -a "${logFile}"
