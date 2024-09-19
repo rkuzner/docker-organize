@@ -18,7 +18,9 @@ The image works (and uses) the following paths actively:
 
 `data`, `source` & `target` volumes may be used at your discretion, they are *optional* mappings, keep in mind carefuly referencing them on the organize-tool config files.
 
-## Single Run Example
+## Run Examples
+
+### Single Run Example
 
 ``` bash
 docker run -it --name docker-organize
@@ -43,7 +45,7 @@ docker run -it --name docker-organize
  docker-organize
 ```
 
-## Recurring Scheduled Run Example (using crontab within the image)
+### Recurring Scheduled Run Example (using crontab within the image)
 
 ``` bash
 docker run -dit --rm --name docker-organize
@@ -62,3 +64,11 @@ Other sample crontab schedules:
 - `0 12 * * 1,3,5` - At noon every Monday, Wednesday and Friday
 
 More configurations can be generated at [Crontab Guru](https://crontab.guru/#0_3_*_*_*)
+
+## Craftmanship
+
+Made on my free time, troubleshooting is mainly when I find problems or misbehaviors.
+
+I use it to automate synced mobile camera roll contents to archive folders.
+
+Code for this image is stored in [GitHub](https://github.com/rkuzner/docker-organize).
