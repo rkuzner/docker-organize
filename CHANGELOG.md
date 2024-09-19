@@ -27,6 +27,12 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.1.1 - 2024-09-19
+
+![img_fix]
+
+- export config location to environment for scheduled runs
+
 ## 0.1.0 - 2024-09-18
 
 ![img_add]
