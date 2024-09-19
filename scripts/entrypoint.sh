@@ -14,6 +14,10 @@ echo "Checking whether the config file has valid contents.."
 organize check
 echo " -+*+- -+*+- -+*+- -+*+- "
 
+echo "Prepare organize-run.conf file"
+echo "#!/bin/bash" > /home/ot/organize-run.conf
+echo 'THE_ORGANIZE_CONFIG="'${ORGANIZE_CONFIG}'"' >> /home/ot/organize-run.conf
+
 # evaluate if ORGANIZE_COMMAND was set on ENV, if so, only use if valid
 if [ -n "${ORGANIZE_COMMAND}" ]; then
   echo "Found ORGANIZE_COMMAND environment var!"
@@ -23,8 +27,7 @@ if [ -n "${ORGANIZE_COMMAND}" ]; then
   fi
 fi
 echo "Using THE_ORGANIZE_COMMAND: ${THE_ORGANIZE_COMMAND}"
-echo "Prepare organize-run.conf file"
-echo "#!/bin/bash" > /home/ot/organize-run.conf
+echo "Append ORGANIZE_COMMAND to organize-run.conf file"
 echo 'THE_ORGANIZE_COMMAND="'${THE_ORGANIZE_COMMAND}'"' >> /home/ot/organize-run.conf
 
 # check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it; and keep the image running...
