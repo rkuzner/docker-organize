@@ -22,13 +22,15 @@ THE_ORGANIZE_COMMAND="run"
 log_message " -+*+- -+*+- -+*+- -+*+- "
 log_message "showing path for Organize Config file:"
 organize show --path | tee -a "${logFile}"
+
 log_message " -+*+- -+*+- -+*+- -+*+- "
 log_message "Checking whether the config file has valid contents.."
 organize check | tee -a "${logFile}"
-log_message " -+*+- -+*+- -+*+- -+*+- "
 
+log_message " -+*+- -+*+- -+*+- -+*+- "
 log_message "Prepare organize-run.conf file"
 echo "#!/bin/bash" > /home/ot/organize-run.conf
+log_message "Append ORGANIZE_CONFIG to organize-run.conf file"
 echo 'THE_ORGANIZE_CONFIG="'${ORGANIZE_CONFIG}'"' >> /home/ot/organize-run.conf
 
 # evaluate if ORGANIZE_COMMAND was set on ENV, if so, only use if valid
@@ -46,6 +48,7 @@ echo 'THE_ORGANIZE_COMMAND="'${THE_ORGANIZE_COMMAND}'"' >> /home/ot/organize-run
 
 # check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it; and keep the image running...
 if [ -n "${ORGANIZE_SCHEDULE}" ]; then
+  log_message " -+*+- -+*+- -+*+- -+*+- "
   log_message "Found ORGANIZE_SCHEDULE environment var!"
 
   log_message "Clear crontab schedule"
@@ -62,6 +65,7 @@ fi
 
 # at this point, only a single run should occur
 if [ -z "${ORGANIZE_SCHEDULE}" ]; then
+  log_message " -+*+- -+*+- -+*+- -+*+- "
   log_message "No ORGANIZE_SCHEDULE environment var Found!"
   log_message "This is a Single run/sim!"
   exec /home/ot/organize-run.sh
