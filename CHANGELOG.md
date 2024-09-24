@@ -27,6 +27,17 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.0 - 2024-09-23
+
+![img_add]
+
+- log_function on tool-run script to log start and end times of individual runs
+- log_function on entry point script to log times of individual steps
+
+![img_fix]
+
+- on cron schedule setup, crontab schedule was not properly removed
+
 ## 0.1.1 - 2024-09-19
 
 ![img_fix]
