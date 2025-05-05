@@ -15,6 +15,8 @@ RUN touch /var/spool/cron/crontabs/ot && \
 
 # install the tool onto the image
 RUN pip3 install -U organize-tool
+# install poppler onto the image
+RUN pip3 install -U python-poppler
 
 # prepare the image EntryPoint
 COPY scripts/entrypoint.sh /
