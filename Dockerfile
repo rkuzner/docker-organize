@@ -1,9 +1,11 @@
 FROM python:3.12-slim
 
-# update image packages &&
+# update image packages
+RUN apt-get update
 # install cron daemon to support in-container cron schedule
-RUN apt-get update && \
-    apt-get install -y cron
+RUN apt-get install -y cron
+# install poppler
+RUN apt-get install -y poppler-utils
 
 # add a user so the tool is encapsulated
 RUN useradd -m -U -G crontab -s /bin/bash ot
