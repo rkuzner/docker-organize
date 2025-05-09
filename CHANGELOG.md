@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.1 - 2025-05-08
+
 ![img_add]
 
 - poppler onto the image
