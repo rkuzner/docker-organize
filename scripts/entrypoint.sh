@@ -19,6 +19,7 @@ function log_message() {
 # set the default ORGANIZE_COMMAND
 THE_ORGANIZE_COMMAND="run"
 
+log_message " - "
 log_message " -+*+- -+*+- -+*+- -+*+- "
 log_message "showing path for Organize Config file:"
 organize show --path | tee -a "${logFile}"
@@ -59,6 +60,10 @@ if [ -n "${ORGANIZE_SCHEDULE}" ]; then
 
   log_message "restart cron service"
   service cron restart
+  exitCode=${?}
+  if [ ${exitCode} -gt 0 ] ; then
+    log_message "There was a problem restarting cron service, exitCode was: ${exitCode}"
+  fi
 
   /bin/bash
 fi
