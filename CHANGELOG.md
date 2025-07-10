@@ -27,6 +27,12 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.2 - 2025-05-08
+
+![img_fix]
+
+- on cron schedule setup, crontab pid file could not be removed due to permissions
+
 ## 0.2.1 - 2025-05-08
 
 ![img_add]
