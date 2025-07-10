@@ -52,10 +52,10 @@ if [ -n "${ORGANIZE_SCHEDULE}" ]; then
   log_message "Found ORGANIZE_SCHEDULE environment var!"
 
   log_message "Clear crontab schedule"
-  crontab -r 2>/dev/null | tee -a "${logFile}"
+  crontab -u ot -r 2>/dev/null | tee -a "${logFile}"
 
   log_message "Set crontab schedule"
-  echo "${ORGANIZE_SCHEDULE} /home/ot/organize-run.sh" | crontab -
+  echo "${ORGANIZE_SCHEDULE} /home/ot/organize-run.sh" | crontab -u ot -
 
   log_message "restart cron service"
   service cron restart
