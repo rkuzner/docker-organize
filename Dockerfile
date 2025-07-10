@@ -43,6 +43,9 @@ VOLUME /data /source /target /config /logs
 # allow app to find config files on default path
 ENV ORGANIZE_CONFIG=/config/config.yaml
 
+# start the cron deamon
+RUN service cron restart
+
 # switch to the user
 USER ot
 WORKDIR /home/ot
