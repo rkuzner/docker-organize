@@ -19,17 +19,16 @@ function log_message() {
 # set the default ORGANIZE_COMMAND
 THE_ORGANIZE_COMMAND="run"
 
-log_message " - "
 log_message " -+*+- -+*+- -+*+- -+*+- "
-log_message "showing path for Organize Config file:"
-organize show --path | tee -a "${logFile}"
+log_message "checking path for Organize Config file..."
+whatPath=$(organize show --path)
+log_message "...found: ${whatPath}"
 
-log_message " -+*+- -+*+- -+*+- -+*+- "
-log_message "Checking whether the config file has valid contents.."
-organize check | tee -a "${logFile}"
+log_message "Checking whether the config file has valid contents..."
+checkResult=$(organize check)
+log_message "...result: ${checkResult}"
 
-log_message " -+*+- -+*+- -+*+- -+*+- "
-log_message "Prepare organize-run.conf file"
+log_message "Preparing organize-run.conf file..."
 echo "#!/bin/bash" > /home/ot/organize-run.conf
 log_message "Append ORGANIZE_CONFIG to organize-run.conf file"
 echo 'THE_ORGANIZE_CONFIG="'${ORGANIZE_CONFIG}'"' >> /home/ot/organize-run.conf
@@ -47,9 +46,10 @@ log_message "Using THE_ORGANIZE_COMMAND: ${THE_ORGANIZE_COMMAND}"
 log_message "Append ORGANIZE_COMMAND to organize-run.conf file"
 echo 'THE_ORGANIZE_COMMAND="'${THE_ORGANIZE_COMMAND}'"' >> /home/ot/organize-run.conf
 
+log_message "Done preparing organize-run.conf file."
+
 # check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it; and keep the image running...
 if [ -n "${ORGANIZE_SCHEDULE}" ]; then
-  log_message " -+*+- -+*+- -+*+- -+*+- "
   log_message "Found ORGANIZE_SCHEDULE environment var!"
 
   log_message "Clear crontab schedule"
@@ -58,19 +58,11 @@ if [ -n "${ORGANIZE_SCHEDULE}" ]; then
   log_message "Set crontab schedule"
   echo "${ORGANIZE_SCHEDULE} /home/ot/organize-run.sh" | crontab -u ot -
 
-  log_message "restart cron service"
-  service cron restart
-  exitCode=${?}
-  if [ ${exitCode} -gt 0 ] ; then
-    log_message "There was a problem restarting cron service, exitCode was: ${exitCode}"
-  fi
-
   /bin/bash
 fi
 
 # at this point, only a single run should occur
 if [ -z "${ORGANIZE_SCHEDULE}" ]; then
-  log_message " -+*+- -+*+- -+*+- -+*+- "
   log_message "No ORGANIZE_SCHEDULE environment var Found!"
   log_message "This is a Single run/sim!"
   exec /home/ot/organize-run.sh
