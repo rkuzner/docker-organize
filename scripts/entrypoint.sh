@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # exit immediately on any shell error
-set -e
+#set -e
 
 scriptBaseName=$( basename "${0}" .sh )
 logFolder="/logs"
@@ -48,7 +48,7 @@ echo 'THE_ORGANIZE_COMMAND="'${THE_ORGANIZE_COMMAND}'"' >> /home/ot/organize-run
 
 log_message "Done preparing organize-run.conf file."
 
-# check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it; and keep the image running...
+# check if ORGANIZE_SCHEDULE was set on ENV. if so, set crontab schedule with it
 if [ -n "${ORGANIZE_SCHEDULE}" ]; then
   log_message "Found ORGANIZE_SCHEDULE environment var!"
 
@@ -58,12 +58,18 @@ if [ -n "${ORGANIZE_SCHEDULE}" ]; then
   log_message "Set crontab schedule"
   echo "${ORGANIZE_SCHEDULE} /home/ot/organize-run.sh" | crontab -u ot -
 
-  /bin/bash
-fi
-
-# at this point, only a single run should occur
-if [ -z "${ORGANIZE_SCHEDULE}" ]; then
+  log_message "restart cron service"
+  service cron restart
+  exitCode=${?}
+  if [ ${exitCode} -gt 0 ] ; then
+    log_message "There was a problem restarting cron service, exitCode was: ${exitCode}"
+  fi
+else
   log_message "No ORGANIZE_SCHEDULE environment var Found!"
   log_message "This is a Single run/sim!"
   exec /home/ot/organize-run.sh
+  exit ${?}
 fi
+
+# keep the image running...
+/bin/bash
