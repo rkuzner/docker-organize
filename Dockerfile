@@ -1,50 +1,48 @@
 FROM python:3.12-slim
 
 # update image packages
-RUN apt-get update
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
+
+# install sudo to support running tool as unpriviledged user
 # install cron daemon to support in-container cron schedule
-RUN apt-get install -y cron
-# install poppler
-RUN apt-get install -y poppler-utils
+# install poppler utils onto the image (will be used by organize-tool)
+RUN apt-get install -y sudo cron poppler-utils
 
 # add a user so the tool is encapsulated
-RUN useradd -m -U -G crontab -s /bin/bash ot
+RUN useradd -m -U -G users,crontab -s /bin/bash theuser
 
 # allow the user to have cron schedules
-RUN touch /var/spool/cron/crontabs/ot && \
-    chown ot:crontab /var/spool/cron/crontabs/ot && \
-    chmod u+s /usr/sbin/cron
+RUN \
+ touch /var/spool/cron/crontabs/theuser && \
+ chown theuser:crontab /var/spool/cron/crontabs/theuser && \
+ chmod u+s /usr/sbin/cron
 
 # install the tool onto the image
 RUN pip3 install -U organize-tool
 
-# prepare the image EntryPoint
-COPY scripts/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+# prepare the image EntryPoint with logMessage function
+COPY scripts/log-message.sh scripts/entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
 
-# prepare the run script
-COPY scripts/organize-run.conf /home/ot/
-COPY scripts/organize-run.sh /home/ot/
-RUN chown ot:ot /home/ot/organize-run.conf && \
-    chown ot:ot /home/ot/organize-run.sh && \
-    chmod +x /home/ot/organize-run.sh
+# prepare the tool-run script with logMessage function
+COPY scripts/log-message.sh scripts/tool-run.sh /home/theuser/
+RUN \
+ chown theuser:theuser /home/theuser/log-message.sh && \
+ chown theuser:theuser /home/theuser/tool-run.sh && \
+ chmod +x /home/theuser/tool-run.sh
 
-# allow app to operate on data, source & target folders
-# allow folders for config & logs
-RUN mkdir -p /data   && chmod go+rw /data   && \
-    mkdir -p /source && chmod go+rw /source && \
-    mkdir -p /target && chmod go+rw /target && \
-    mkdir -p /config && chmod go+rw /config && \
-    mkdir -p /logs   && chmod go+rw /logs
+RUN \
+ mkdir -p /app    && chmod go+r  /app    && \
+ mkdir -p /config && chmod go+rw /config && \
+ mkdir -p /logs   && chmod go+rw /logs   && \
+ mkdir -p /source && chmod go+rw /source && \
+ mkdir -p /target && chmod go+rw /target && \
+ mkdir -p /data   && chmod go+rw /data
 
 # declare volumes
-VOLUME /data /source /target /config /logs
+VOLUME /config /logs /source /target /data
 
-# allow app to find config files on default path
-ENV ORGANIZE_CONFIG=/config/config.yaml
+# add env var for tool_name
+ENV TOOL_NAME="organize"
 
-# switch to the user
-USER ot
-WORKDIR /home/ot
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
