@@ -27,6 +27,20 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.3 - 2025-08-30
+
+![img_add]
+
+- sample `env-vars.conf` & `docker-compose.yaml` files
+
+![img_upd]
+
+- tool-run script optimization (and renamed)
+- entrypoint script optimization
+- rename unpriviledged user and prepare to receive UID & GID
+- move logging functions to separate file
+- docker image & manifest build script to use buildx
+
 ## 0.2.2 - 2025-05-08
 
 ![img_fix]
@@ -64,7 +78,7 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 - pre-commit-config.yaml
 - ReadMe
 - ChangeLog
-- sample config.yaml
+- sample `config.yaml`
 - docker image & manifest build script
 
 ![img_mod]
