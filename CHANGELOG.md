@@ -39,7 +39,7 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 - entrypoint script optimization
 - rename unpriviledged user and prepare to receive UID & GID
 - move logging functions to separate file
-- docker image & manifest build script to use buildx
+- docker image & manifest build script to use `buildx`
 
 ## 0.2.2 - 2025-05-08
 
