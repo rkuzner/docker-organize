@@ -1,0 +1,26 @@
+name: qpdf-tool
+services:
+  app:
+    image: rkuzner/docker-organize:latest
+    container_name: docker-organize1
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+    cpu_shares: 10
+    network_mode: bridge
+    volumes:
+      - /path/to/docker/config/organize-tool:/config:ro
+      - /path/to/docker/config/organize-tool/logs:/logs
+      - /path/to/data:/data
+      - /path/to/source:/source
+      - /path/to/target:/target
+    environment:
+      DATA_FOLDER: "/source/2decrypt"
+      SOURCE_FOLDER: "/source/2decrypt"
+      TARGET_FOLDER: "/target/decrypted"
+      TOOL_SCHEDULE: "0 6 * * *"
+      ORGANIZE_CONFIG: "/config/config.yaml"
+      ORGANIZE_COMMAND: "run"
+    restart: unless-stopped
+    tty: true
