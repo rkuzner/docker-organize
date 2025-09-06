@@ -38,11 +38,29 @@ log_message "Checking folders..."
 if [ ! -d "${SOURCE_FOLDER}" ]; then
 	log_message_and_exit 11 "Invalid SOURCE_FOLDER: ${SOURCE_FOLDER}"
 fi
+if [ ! -r "${SOURCE_FOLDER}" ]; then
+	log_message_and_exit 12 "Can not read from SOURCE_FOLDER: ${SOURCE_FOLDER}"
+fi
+if [ ! -w "${SOURCE_FOLDER}" ]; then
+	log_message_and_exit 13 "Can not write on SOURCE_FOLDER: ${SOURCE_FOLDER}"
+fi
 if [ ! -d "${TARGET_FOLDER}" ]; then
-	log_message_and_exit 12 "Invalid TARGET_FOLDER: ${TARGET_FOLDER}"
+	log_message_and_exit 14 "Invalid TARGET_FOLDER: ${TARGET_FOLDER}"
+fi
+if [ ! -r "${TARGET_FOLDER}" ]; then
+	log_message_and_exit 15 "Can not read from TARGET_FOLDER: ${TARGET_FOLDER}"
+fi
+if [ ! -w "${TARGET_FOLDER}" ]; then
+	log_message_and_exit 16 "Can not write on TARGET_FOLDER: ${TARGET_FOLDER}"
 fi
 if [ ! -d "${DATA_FOLDER}" ]; then
-	log_message_and_exit 13 "Invalid DATA_FOLDER: ${DATA_FOLDER}"
+	log_message_and_exit 17 "Invalid DATA_FOLDER: ${DATA_FOLDER}"
+fi
+if [ ! -r "${DATA_FOLDER}" ]; then
+	log_message_and_exit 18 "Can not read from DATA_FOLDER: ${DATA_FOLDER}"
+fi
+if [ ! -w "${DATA_FOLDER}" ]; then
+	log_message_and_exit 19 "Can not write on DATA_FOLDER: ${DATA_FOLDER}"
 fi
 log_message "Found valid folders!"
 
