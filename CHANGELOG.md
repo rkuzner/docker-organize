@@ -27,6 +27,13 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.4 - 2025-09-05
+
+![img_add]
+
+- minor optimizations on logging
+- folder permission evaluation
+
 ## 0.2.3 - 2025-08-30
 
 ![img_add]
