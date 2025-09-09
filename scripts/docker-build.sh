@@ -2,7 +2,7 @@
 
 dockerUserName="rkuzner"
 imageName="docker-organize"
-imageVersion="0.2.4"
+imageVersion="0.2.5"
 platformCodeList="amd64 arm64"
 
 # to run this commands, you should be logged to docker-hub!
