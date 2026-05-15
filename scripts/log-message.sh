@@ -1,9 +1,13 @@
 #!/bin/bash
+# v0.3.1 by RK on 2026-05-15
+
 defaultLogFileBaseName=$( basename "${0}" .sh )
 defaultLogFolder=$( cd "$( dirname "${0}" )" && pwd )
 
 logFileBaseName="${logFileBaseName:-${defaultLogFileBaseName}}"
-logFolder="${logFolder}:-${defaultLogFolder}"
+logFolder="${logFolder:-${defaultLogFolder}}"
+logRotateSubFolder="old"
+logRotateAgeDays=7
 
 export COLUMNS=180
 
@@ -35,6 +39,41 @@ function get_logFileName() {
 	echo "${logFolder}/${logFileBaseName}-$( date +%F ).log"
 }
 
+function get_logRotateFolderName() {
+	local whatYear="$( date +%Y )"
+	if [ -n "${1}" ]; then
+		whatYear="${1}"
+	fi
+	echo "${logFolder}/${logRotateSubFolder}/${whatYear}"
+}
+
+function get_logRotateAgeSeconds() {
+	echo "$(( $( date +%s ) - $(( ${logRotateAgeDays} * 24 * 60 * 60 )) ))"
+}
+
+function log_rotate() {
+	local dryRun=""
+	[ "${1}" == "--dry-run" ] && dryRun=1
+	[ "${dryRun}" ] && log_message "[dry-run mode — no log files will be rotated]"
+
+	for file in "${logFolder}"/"${logFileBaseName}"-*.log; do
+		fileAgeSeconds="$( date -r "${file}" +%s )"
+		rotateAgeSeconds="$( get_logRotateAgeSeconds )"
+		if [ "${fileAgeSeconds}" -lt "${rotateAgeSeconds}" ]; then
+			logRotateTargetFolder="$( get_logRotateFolderName "$( date -r "${file}" +%Y )" )"
+
+			if [ "${dryRun}" ]; then
+				log_message "[dry-run] mv ${file}  →  ${logRotateTargetFolder}"
+			else
+				log_message "rotating ${file}  to  ${logRotateTargetFolder}"
+				mkdir -p "${logRotateTargetFolder}"
+				mv "${file}" "${logRotateTargetFolder}"
+			fi
+
+		fi
+	done
+}
+
 # logs a message to console AND to logFileBaseName (if available)
 function log_message() {
 	local message2log="${*}"
@@ -52,8 +91,9 @@ function log_message() {
 
 # logs a message to console AND to logFileBaseName (if available) THEN exits with provided code
 function log_message_and_exit() {
-	local exitCode=$( expr "${1}" + 0 ); shift
+	local exitCode
+	exitCode=$(( ${1} + 0 )); shift
 	local message2log="${*}"
 	log_message "${message2log}"
-	exit ${exitCode}
+	exit "${exitCode}"
 }
