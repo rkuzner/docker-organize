@@ -27,6 +27,14 @@ The format is based on [Keep a Changelog][web_changelog], and this project adher
 
 > Please list here the soon-to-be-released features
 
+## 0.2.7 - 2026-05-15
+
+![img_upd]
+
+- build script with new version
+- log script with new version
+- entrypoint and tool-run scripts to call for log rotation
+
 ## 0.2.6 - 2025-09-13
 
 ![img_upd]
