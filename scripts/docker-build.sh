@@ -109,7 +109,7 @@ function buildx_images() {
     done
 
     for label in "${imageVersion}" "latest"; do
-        docker buildx build --platform ${buildxPlatformList} -t ${dockerUserName}/${imageName}:${label} --push .
+        docker-buildx build --platform ${buildxPlatformList} -t ${dockerUserName}/${imageName}:${label} --push .
     done
 }
 
