@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.3.0 by RK on 2026-05-07
+# v0.3.1 by RK on 2026-05-15
 
 defaultLogFileBaseName=$( basename "${0}" .sh )
 defaultLogFolder=$( cd "$( dirname "${0}" )" && pwd )
@@ -52,7 +52,8 @@ function get_logRotateAgeSeconds() {
 }
 
 function log_rotate() {
-	local dryRun=$( [ -n "${1}" ] && [ "${1}" == "--dry-run" ] )
+	local dryRun=""
+	[ "${1}" == "--dry-run" ] && dryRun=1
 	[ "${dryRun}" ] && log_message "[dry-run mode — no log files will be rotated]"
 
 	for file in "${logFolder}"/"${logFileBaseName}"-*.log; do
@@ -64,6 +65,8 @@ function log_rotate() {
 			if [ "${dryRun}" ]; then
 				log_message "[dry-run] mv ${file}  →  ${logRotateTargetFolder}"
 			else
+				log_message "rotating ${file}  to  ${logRotateTargetFolder}"
+				mkdir -p "${logRotateTargetFolder}"
 				mv "${file}" "${logRotateTargetFolder}"
 			fi
 
@@ -89,7 +92,7 @@ function log_message() {
 # logs a message to console AND to logFileBaseName (if available) THEN exits with provided code
 function log_message_and_exit() {
 	local exitCode
-	exitCode=$( "${1}" + 0 ); shift
+	exitCode=$(( ${1} + 0 )); shift
 	local message2log="${*}"
 	log_message "${message2log}"
 	exit "${exitCode}"
