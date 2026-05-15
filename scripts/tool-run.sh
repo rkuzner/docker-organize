@@ -22,6 +22,12 @@ source "${scriptFolder}/log-message.sh"
 set_logFolder "${LOG_FOLDER:-${DEFAULT_LOG_FOLDER}}"
 set_logFileBaseName "${scriptBaseName}"
 
+log_message "-+*+- -+*+- -+*+- -+*+- -+*+-"
+log_message "-+*+-  Tool-Run  START  -+*+-"
+log_message "-+*+- -+*+- -+*+- -+*+- -+*+-"
+
+log_rotate
+
 if [ -f "${configFileName}" ]; then
 	log_message "Found Config file!"
 else
